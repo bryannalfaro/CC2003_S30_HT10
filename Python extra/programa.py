@@ -1,0 +1,158 @@
+#Bryann Eduardo Alfaro 19372
+#Universidad del Valle de Guatemala
+
+#Referencias usadas para la elaboracion de este programa:
+#https://www.mclibre.org/consultar/python/lecciones/python-listas.html
+#https://www.w3schools.com/python/ref_string_join.asp
+#https://www.geeksforgeeks.org/connectivity-in-a-directed-graph/
+#https://www.pythonista.io/cursos/py101/escritura-y-lectura-de-archivos
+#https://networkx.github.io/documentation/latest/_downloads/networkx_reference.pdf
+
+import networkx as nx
+
+grafo = nx.DiGraph() #Se crea un grafo dirigido
+
+#Se realiza la inicializacion del grafo leyendo de guategrafo
+
+def iniciarGrafo():
+    archivo=open("guategrafo.txt", "r")
+    for i in archivo:
+        particion= i.split(" ")
+        primeraCiudad = particion[0]
+        segundaCiudad = particion[1]
+        pesoArista = float(particion [2])
+        
+        #add_edge(dato1, dato2, weight)
+        grafo.add_edge(primeraCiudad,segundaCiudad,weight=pesoArista)
+    
+    archivo.close()
+
+
+#Se realiza el calculo del centro del grafo, tiene que ser fuertemente dirigido
+def centroGrafo():
+    try:
+        centro = nx.center(grafo)
+        for i in centro:
+            print(i)
+    except:
+        print("No se puede calcular debido a que el grafo no es fuertemente conectado. Lo siento")
+
+
+
+def obtenerCiudades():
+    
+    #Impresion de datos
+    nodosGrafo = grafo.nodes()
+    print ("Ciudades disponibles: ")
+    print ("-".join(nodosGrafo))
+    return nodosGrafo
+
+def modificarGrafo(ciudad1, ciudad2, distancia, eleccion):
+    if(eleccion=="1"):
+        if((grafo.has_edge(ciudad1,ciudad2))==True): 
+            
+            grafo.remove_edge(ciudad1,ciudad2)            
+            print()
+            print("EL BLOQUEO SE REALIZO. GRACIAS POR REPORTAR")
+            print()
+        else:
+            print("LA CONECCION NO PUEDE HACERSE")
+        
+    elif(eleccion=="2"):
+            
+        #add_edge(dato1, dato2, weight)
+        grafo.add_edge(ciudad1,ciudad2,weight=float(distancia))
+        print("LA RUTA SE ESTABLECIO CORRECTAMENTE.")
+        
+        
+def floydAlgoritmoRuta(ciudad1,ciudad2):
+    
+    recorridoCiudades = [] #Lista para guardar la ciudad o ciudades intermedias
+    floydDict = nx.floyd_warshall_predecessor_and_distance(grafo)  
+    
+    try:
+        ruta = floydDict[0][ciudad1][ciudad2] #path[0] trae el diccionario de predecesores
+        distanciaCiudades = floydDict[1][ciudad1][ciudad2] #path[1] trae el diccionario de distancias
+        recorridoCiudades.append(ruta)
+        
+        while True:
+            if (ruta != ciudad1):
+                intermediaS = floydDict[0][ciudad1][ruta]
+                recorridoCiudades.append(intermediaS)
+                ruta = intermediaS    
+            else:
+                break
+
+        recorridoCiudades.reverse()
+        print()
+        print ("LA RUTA PARA IR A TU DESTINO ES: ")
+        print (", ".join(recorridoCiudades),",",ciudad2)
+        print ("LA DISTANCIA SERA DE", distanciaCiudades, "km")
+        print()
+    except:
+        print("Error, HAY UN BLOQUEO")
+
+
+#-------------------PROGRAMA PRINCIPAL----------------------------------------
+#Se crea un grafo
+iniciarGrafo()
+
+opcion =0
+while(opcion !="4"):
+    print("Elige una opcion: ")
+    print("1. Ruta entre 2 ciudades")
+    print("2. Mostrar centro de grafo")
+    print("3. Realizar modificaciones")
+    print("4. Salir")
+    
+    opcion = input()
+    if(opcion=="1"):
+        
+        listaNodos= obtenerCiudades()
+        ciudad1 = input("Ingrese la ciudad de origen: ")
+        while ciudad1 not in listaNodos:
+            ciudad1 = input("Ingrese una ciudad correcta: ")
+        
+        
+        ciudad2 = input("Ingrese la ciudad destino: ")
+        while ciudad2 not in listaNodos:
+            ciudad2 = input("Ingrese una ciudad correcta: ")
+        
+        while ciudad2 == ciudad1:
+            ciudad2 = input("No puede ser igual. Ingrese otra: ")
+            while ciudad2 not in listaNodos:
+                ciudad2 = input("Ingrese una ciudad correcta: ")
+            
+        floydAlgoritmoRuta(ciudad1, ciudad2)
+        
+        
+    elif (opcion =="2"):
+        print()
+        print("El centro del grafo esta determinado por: ")
+        centroGrafo()
+        print()
+        
+    elif (opcion =="3"):
+        print("Entraste a 3")
+        print("Que deseas cambiar")
+        print("1. Interrupcion de trafico")
+        print("2. Establecer conexion")
+        
+        opcion = input()
+        
+        if(opcion=="1"):
+            obtenerCiudades()
+            ciudad1 = input("Ciudad 1: ")
+            ciudad2 = input("Ciudad 2: ")
+            modificarGrafo(ciudad1,ciudad2,0,"1")
+            
+        elif(opcion=="2"):
+            ciudad1 = input("Ciudad 1: ")
+            ciudad2 = input("Ciudad 2: ")
+            distancia= input("Distancia: ")
+            
+            modificarGrafo(ciudad1, ciudad2, distancia, "2")
+        
+    else:
+        print("Adios")
+        opcion="4"
