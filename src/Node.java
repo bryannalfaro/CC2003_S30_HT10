@@ -7,25 +7,51 @@ import java.util.List;
  *
  */
 public class Node {
+	//Variables
     private String departamento;
     private List<Edge> arista;
- 
+    
+    /**
+     * 
+     * @param departamento
+     * Constructor de nodo
+     */
     public Node(String departamento) {
         this.departamento = departamento;
     }
- 
+    
+    /**
+     * 
+     * @return departamento
+     * Metodo que devuelve el departamento del nodo
+     */
     public String getDepartamento() {
         return departamento;
     }
- 
+    
+    /**
+     * 
+     * @param departamento
+     * Metodo para establecer un departamento  al nodo
+     */
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
- 
+    
+    /**
+     * 
+     * @return List
+     * Metodo que devuelve todas las aristas
+     */
     public List<Edge> getAristas() {
         return arista;
     }
- 
+    
+    /**
+     * 
+     * @param edge
+     * Metodo para agregar una arista al nodo
+     */
     public void addArista(Edge edge) {
         if (arista == null) {
             arista = new ArrayList<>();
@@ -33,6 +59,9 @@ public class Node {
         arista.add(edge);
     }
  
+    /**
+     * Metodo para imprimir
+     */
     @Override
     public String toString() {
         return arista+"\n";

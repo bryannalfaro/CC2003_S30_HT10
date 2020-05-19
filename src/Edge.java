@@ -5,10 +5,18 @@
  */
 
 public class Edge {
+	//Variables
     private Node NodoOrigen;
     private Node NodoDestino;
     private double distancia;
- 
+    
+    /**
+     * 
+     * @param origin
+     * @param destination
+     * @param distance
+     * Constructor de la arista
+     */
     public Edge(Node origin, Node destination, double distance) {
         this.NodoOrigen = origin;
         this.NodoDestino = destination;
