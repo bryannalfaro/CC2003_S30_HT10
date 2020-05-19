@@ -1,7 +1,7 @@
 /**
  * 
  * @author Bryann
- *Implementacion extraida de: 
+ *Implementacion extraida de: https://devs4j.com/2017/11/24/implementa-un-grafo-de-ciudades-en-java/
  */
 
 public class Edge {
