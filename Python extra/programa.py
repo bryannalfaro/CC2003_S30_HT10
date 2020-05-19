@@ -12,14 +12,6 @@ import networkx as nx
 
 grafo = nx.DiGraph() #Se crea un grafo dirigido
 
-def obtenerCiudades():
-    
-    #Impresion de datos
-    nodosGrafo = grafo.nodes()
-    print ("Ciudades disponibles: ")
-    print ("-".join(nodosGrafo))
-    return nodosGrafo
-
 def modificarGrafo(ciudad1, ciudad2, distancia, eleccion):
     if(eleccion=="1"):
         if((grafo.has_edge(ciudad1,ciudad2))==True): 
@@ -36,35 +28,7 @@ def modificarGrafo(ciudad1, ciudad2, distancia, eleccion):
         #add_edge(dato1, dato2, weight)
         grafo.add_edge(ciudad1,ciudad2,weight=float(distancia))
         print("LA RUTA SE ESTABLECIO CORRECTAMENTE.")
-        
-        
-def floydAlgoritmoRuta(ciudad1,ciudad2):
-    
-    recorridoCiudades = [] #Lista para guardar la ciudad o ciudades intermedias
-    floydDict = nx.floyd_warshall_predecessor_and_distance(grafo)  
-    
-    try:
-        ruta = floydDict[0][ciudad1][ciudad2] #path[0] trae el diccionario de predecesores
-        distanciaCiudades = floydDict[1][ciudad1][ciudad2] #path[1] trae el diccionario de distancias
-        recorridoCiudades.append(ruta)
-        
-        while True:
-            if (ruta != ciudad1):
-                intermediaS = floydDict[0][ciudad1][ruta]
-                recorridoCiudades.append(intermediaS)
-                ruta = intermediaS    
-            else:
-                break
-
-        recorridoCiudades.reverse()
-        print()
-        print ("LA RUTA PARA IR A TU DESTINO ES: ")
-        print (", ".join(recorridoCiudades),",",ciudad2)
-        print ("LA DISTANCIA SERA DE", distanciaCiudades, "km")
-        print()
-    except:
-        print("Error, HAY UN BLOQUEO")
-
+            
 
 #-------------------PROGRAMA PRINCIPAL----------------------------------------
 #Se crea un grafo
@@ -89,9 +53,19 @@ while(opcion !="4"):
     print("4. Salir")
     
     opcion = input()
-    if(opcion=="1"):
+    if(opcion=="1"):     
         
-        listaNodos= obtenerCiudades()
+        #Impresion de datos
+        nodosGrafo = grafo.nodes()
+        num=1
+        print ("Ciudades disponibles: ")
+        for i in nodosGrafo:
+                print(num,")",i)
+                num=num+1
+    
+        listaNodos= nodosGrafo
+        
+        #---------------PEDIDO DE DATOS--------------------------
         ciudad1 = input("Ingrese la ciudad de origen: ")
         while ciudad1 not in listaNodos:
             ciudad1 = input("Ingrese una ciudad correcta: ")
@@ -105,11 +79,43 @@ while(opcion !="4"):
             ciudad2 = input("No puede ser igual. Ingrese otra: ")
             while ciudad2 not in listaNodos:
                 ciudad2 = input("Ingrese una ciudad correcta: ")
+        
+        #----------------------------------------------------------
+                
+        recorridoCiudades = [] #Lista para guardar la ciudad o ciudades intermedias
+        floydDict = nx.floyd_warshall_predecessor_and_distance(grafo)  
+        
+        try:
+            ruta = floydDict[0][ciudad1][ciudad2] #path[0] trae el diccionario de predecesores
+            distanciaCiudades = floydDict[1][ciudad1][ciudad2] #path[1] trae el diccionario de distancias
+            recorridoCiudades.append(ruta)
             
-        floydAlgoritmoRuta(ciudad1, ciudad2)
+            while True:
+                if (ruta != ciudad1):
+                    intermediaS = floydDict[0][ciudad1][ruta]
+                    recorridoCiudades.append(intermediaS)
+                    ruta = intermediaS    
+                else:
+                    break
+            
+            
+            listaVolteada = list(reversed(recorridoCiudades)) #Voltear la lista de ciudades intermedias
+ 
+            
+            print()
+            print ("LA RUTA PARA IR A TU DESTINO ES: ")
+            for i in listaVolteada:
+                print(i)
+            print(ciudad2)
+            print ("LA DISTANCIA SERA DE", distanciaCiudades, "km")
+            print()
+            
+        except:
+            print("Error, HAY UN BLOQUEO")
         
         
     elif (opcion =="2"):
+        #Se hace el calculo del centro del grafo
         print()
         print("El centro del grafo esta determinado por: ")
         try:
@@ -129,12 +135,22 @@ while(opcion !="4"):
         opcion = input()
         
         if(opcion=="1"):
-            obtenerCiudades()
+            
+            #Impresion de datos
+            nodosGrafo = grafo.nodes()
+            num=1
+            print ("Ciudades disponibles: ")
+            for i in nodosGrafo:
+                print(num,")",i)
+                num=num+1
+            
+            #Se pide el ingreso de las ciudades
             ciudad1 = input("Ciudad 1: ")
             ciudad2 = input("Ciudad 2: ")
-            modificarGrafo(ciudad1,ciudad2,0,"1")
+            modificarGrafo(ciudad1,ciudad2,0,"1") #Se modifica el grafo
             
         elif(opcion=="2"):
+            #Se hace una nueva conexion
             ciudad1 = input("Ciudad 1: ")
             ciudad2 = input("Ciudad 2: ")
             distancia= input("Distancia: ")

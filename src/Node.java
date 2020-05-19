@@ -52,11 +52,20 @@ public class Node {
      * @param edge
      * Metodo para agregar una arista al nodo
      */
-    public void addArista(Edge edge) {
+    public void addArista(Edge aristaNueva) {
         if (arista == null) {
             arista = new ArrayList<>();
         }
-        arista.add(edge);
+        arista.add(aristaNueva);
+    }
+    
+    /**
+     * 
+     * @param arista
+     * Metodo para eliminar una arista al nodo
+     */
+    public void removeArista(Edge aristaEliminar) {
+        arista.remove(aristaEliminar);
     }
  
     /**

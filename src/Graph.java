@@ -11,18 +11,7 @@ public class Graph {
 	//Variables a utilizar
 	int [][] grafo;
     private List<Node> nodosGrafo;
- 
-    /**
-     * 
-     * @param node
-     * Metodo que se encarga de agregar un nodo al grafo
-     */
-    public void agregarNodo(Node node) {
-        if (nodosGrafo == null) {
-            nodosGrafo = new ArrayList<>();
-        }
-        nodosGrafo.add(node);
-    }
+    
     /**
      * 
      * @return List
@@ -31,6 +20,19 @@ public class Graph {
     public List<Node> getNodos() {
         return nodosGrafo;
     }
+    
+    /**
+     * 
+     * @param node
+     * Metodo que se encarga de agregar un nodo al grafo
+     */
+    public void agregarNodo(Node node) {
+        if (this.nodosGrafo == null) {
+            this.nodosGrafo = new ArrayList<>();
+        }
+        this.nodosGrafo.add(node);
+    }
+    
     
     /**
      * 
@@ -43,6 +45,16 @@ public class Graph {
     	Edge arista=n.getAristas().get(indice);
     	return arista;
     }
+    
+    /**
+     * 
+     * @param node
+     * Metodo para remover nodo
+     */
+    public void removeNodo(Node nodoEliminar) {
+    	this.nodosGrafo.remove(nodosGrafo.indexOf(nodoEliminar));
+    }
+    
     
     /**
      * 

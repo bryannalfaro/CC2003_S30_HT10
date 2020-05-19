@@ -22,9 +22,9 @@ public class PrincipalRutas {
 	            String line = inputScan.nextLine();
 	            String[] indice_particion_texto = line.split(" "); //Particionar texto
 	            
-	            String primera_parte = indice_particion_texto[0];
-	            String segunda_parte = indice_particion_texto[1];
-	            String tercera_parte = indice_particion_texto[2];
+	            String primera_parte = indice_particion_texto[0];//Obtiene origen
+	            String segunda_parte = indice_particion_texto[1];//Obtiene destino
+	            String tercera_parte = indice_particion_texto[2];//Obtiene distancia
 	           
 	            Node n = new Node(primera_parte);
 	            Node n2 = new Node(segunda_parte);
@@ -45,6 +45,7 @@ public class PrincipalRutas {
 		 System.out.println();
 	 }
 	 
-		
+	 
+	 	
     }
 }

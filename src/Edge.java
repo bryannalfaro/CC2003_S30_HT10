@@ -17,34 +17,58 @@ public class Edge {
      * @param distance
      * Constructor de la arista
      */
-    public Edge(Node origin, Node destination, double distance) {
-        this.NodoOrigen = origin;
-        this.NodoDestino = destination;
-        this.distancia = distance;
+    public Edge(Node origenNodo, Node destinoNodo, double distanciaNodos) {
+        this.NodoOrigen = origenNodo;
+        this.NodoDestino = destinoNodo;
+        this.distancia = distanciaNodos;
     }
- 
-    public Node getOrigin() {
+    
+    /**
+     * Metodo para obtener el origen del grafo
+     * @return
+     */
+    public Node getOrigen() {
         return NodoOrigen;
     }
- 
-    public void setOrigin(Node origin) {
-        this.NodoOrigen = origin;
+    
+    /**
+     * Metodo para settear el origen
+     * @param origenNodo
+     */
+    public void setOrigen(Node origenNodo) {
+        this.NodoOrigen = origenNodo;
     }
- 
-    public Node getDestination() {
+    
+    /**
+     * Metodo para obtener el destino 
+     * @return
+     */
+    public Node getDestino() {
         return NodoDestino;
     }
- 
-    public void setDestination(Node destination) {
-        this.NodoDestino = destination;
+    
+    /**
+     * Metodo para establecer el destino
+     * @param destinoNode
+     */
+    public void setDestino(Node destinoNode) {
+        this.NodoDestino = destinoNode;
     }
- 
-    public double getDistance() {
+    
+    /**
+     * Metodo para obtener la distancia
+     * @return
+     */
+    public double getDistancia() {
         return distancia;
     }
- 
-    public void setDistance(double distance) {
-        this.distancia = distance;
+    
+    /**
+     * Metodo que establece la distancia
+     * @param distanciaArista
+     */
+    public void setDistancia(double distanciaArista) {
+        this.distancia = distanciaArista;
     }
  
     @Override
