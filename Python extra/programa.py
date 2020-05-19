@@ -12,33 +12,6 @@ import networkx as nx
 
 grafo = nx.DiGraph() #Se crea un grafo dirigido
 
-#Se realiza la inicializacion del grafo leyendo de guategrafo
-
-def iniciarGrafo():
-    archivo=open("guategrafo.txt", "r")
-    for i in archivo:
-        particion= i.split(" ")
-        primeraCiudad = particion[0]
-        segundaCiudad = particion[1]
-        pesoArista = float(particion [2])
-        
-        #add_edge(dato1, dato2, weight)
-        grafo.add_edge(primeraCiudad,segundaCiudad,weight=pesoArista)
-    
-    archivo.close()
-
-
-#Se realiza el calculo del centro del grafo, tiene que ser fuertemente dirigido
-def centroGrafo():
-    try:
-        centro = nx.center(grafo)
-        for i in centro:
-            print(i)
-    except:
-        print("No se puede calcular debido a que el grafo no es fuertemente conectado. Lo siento")
-
-
-
 def obtenerCiudades():
     
     #Impresion de datos
@@ -95,7 +68,17 @@ def floydAlgoritmoRuta(ciudad1,ciudad2):
 
 #-------------------PROGRAMA PRINCIPAL----------------------------------------
 #Se crea un grafo
-iniciarGrafo()
+archivo=open("guategrafo.txt", "r")
+for i in archivo:
+    particion= i.split(" ")
+    primeraCiudad = particion[0]
+    segundaCiudad = particion[1]
+    pesoArista = float(particion [2])
+    
+    #add_edge(dato1, dato2, weight)
+    grafo.add_edge(primeraCiudad,segundaCiudad,weight=pesoArista)
+
+archivo.close()
 
 opcion =0
 while(opcion !="4"):
@@ -129,7 +112,12 @@ while(opcion !="4"):
     elif (opcion =="2"):
         print()
         print("El centro del grafo esta determinado por: ")
-        centroGrafo()
+        try:
+            centro = nx.center(grafo) #El requisito es que debe ser fuertemente dirigido
+            for i in centro:
+                print(i)
+        except:
+            print("No se puede calcular debido a que el grafo no es fuertemente conectado. Lo siento")
         print()
         
     elif (opcion =="3"):
