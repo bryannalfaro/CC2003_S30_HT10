@@ -12,11 +12,12 @@ import networkx as nx
 
 grafo = nx.DiGraph() #Se crea un grafo dirigido
 
-def modificarGrafo(ciudad1, ciudad2, distancia, eleccion):
+#Metodo que dependiendo de la eleccion realizar la modificacion
+def modificarGrafo(dpto1, dpto2, distancia, eleccion):
     if(eleccion=="1"):
-        if((grafo.has_edge(ciudad1,ciudad2))==True): 
+        if((grafo.has_edge(dpto1,dpto2))==True): 
             
-            grafo.remove_edge(ciudad1,ciudad2)            
+            grafo.remove_edge(dpto1,dpto2)            
             print()
             print("EL BLOQUEO SE REALIZO. GRACIAS POR REPORTAR")
             print()
@@ -26,7 +27,7 @@ def modificarGrafo(ciudad1, ciudad2, distancia, eleccion):
     elif(eleccion=="2"):
             
         #add_edge(dato1, dato2, weight)
-        grafo.add_edge(ciudad1,ciudad2,weight=float(distancia))
+        grafo.add_edge(dpto1,dpto2,weight=float(distancia))
         print("LA RUTA SE ESTABLECIO CORRECTAMENTE.")
             
 
@@ -35,12 +36,12 @@ def modificarGrafo(ciudad1, ciudad2, distancia, eleccion):
 archivo=open("guategrafo.txt", "r")
 for i in archivo:
     particion= i.split(" ")
-    primeraCiudad = particion[0]
-    segundaCiudad = particion[1]
+    primerDepartamento = particion[0]
+    segundoDepartamento = particion[1]
     pesoArista = float(particion [2])
     
     #add_edge(dato1, dato2, weight)
-    grafo.add_edge(primeraCiudad,segundaCiudad,weight=pesoArista)
+    grafo.add_edge(primerDepartamento,segundoDepartamento,weight=pesoArista)
 
 archivo.close()
 
@@ -58,7 +59,7 @@ while(opcion !="4"):
         #Impresion de datos
         nodosGrafo = grafo.nodes()
         num=1
-        print ("Ciudades disponibles: ")
+        print ("Departamentos disponibles: ")
         for i in nodosGrafo:
                 print(num,")",i)
                 num=num+1
@@ -66,19 +67,19 @@ while(opcion !="4"):
         listaNodos= nodosGrafo
         
         #---------------PEDIDO DE DATOS--------------------------
-        ciudad1 = input("Ingrese la ciudad de origen: ")
-        while ciudad1 not in listaNodos:
-            ciudad1 = input("Ingrese una ciudad correcta: ")
+        departamento = input("Ingrese el departamento de donde quiere partir: ")
+        while departamento not in listaNodos:
+            departamento = input("Ingrese un departamento correcto: ")
         
         
-        ciudad2 = input("Ingrese la ciudad destino: ")
-        while ciudad2 not in listaNodos:
-            ciudad2 = input("Ingrese una ciudad correcta: ")
+        segundoDepartamento = input("Ingrese el departamento al que desea ir: ")
+        while segundoDepartamento not in listaNodos:
+            segundoDepartamento = input("Ingrese un departamento correcto: ")
         
-        while ciudad2 == ciudad1:
-            ciudad2 = input("No puede ser igual. Ingrese otra: ")
-            while ciudad2 not in listaNodos:
-                ciudad2 = input("Ingrese una ciudad correcta: ")
+        while segundoDepartamento == departamento:
+            segundoDepartamento = input("Son iguales. Debe ingresar una diferente ")
+            while segundoDepartamento not in listaNodos:
+                segundoDepartamento = input("Ingrese un departamento correcto: ")
         
         #----------------------------------------------------------
                 
@@ -86,18 +87,18 @@ while(opcion !="4"):
         floydDict = nx.floyd_warshall_predecessor_and_distance(grafo)  
         
         try:
-            ruta = floydDict[0][ciudad1][ciudad2] #path[0] trae el diccionario de predecesores
-            distanciaCiudades = floydDict[1][ciudad1][ciudad2] #path[1] trae el diccionario de distancias
+            ruta = floydDict[0][departamento][segundoDepartamento] #path[0] trae el diccionario de predecesores
+            distanciaCiudades = floydDict[1][departamento][segundoDepartamento] #path[1] trae el diccionario de distancias
             recorridoCiudades.append(ruta)
             
+            #Se agregan rutas intermedias que no sean iguales al primer departamento
             while True:
-                if (ruta != ciudad1):
-                    intermediaS = floydDict[0][ciudad1][ruta]
+                if (ruta != departamento):
+                    intermediaS = floydDict[0][departamento][ruta]
                     recorridoCiudades.append(intermediaS)
                     ruta = intermediaS    
                 else:
                     break
-            
             
             listaVolteada = list(reversed(recorridoCiudades)) #Voltear la lista de ciudades intermedias
  
@@ -106,7 +107,7 @@ while(opcion !="4"):
             print ("LA RUTA PARA IR A TU DESTINO ES: ")
             for i in listaVolteada:
                 print(i)
-            print(ciudad2)
+            print(segundoDepartamento)
             print ("LA DISTANCIA SERA DE", distanciaCiudades, "km")
             print()
             
@@ -139,23 +140,23 @@ while(opcion !="4"):
             #Impresion de datos
             nodosGrafo = grafo.nodes()
             num=1
-            print ("Ciudades disponibles: ")
+            print ("Departamentos disponibles: ")
             for i in nodosGrafo:
                 print(num,")",i)
                 num=num+1
             
-            #Se pide el ingreso de las ciudades
-            ciudad1 = input("Ciudad 1: ")
-            ciudad2 = input("Ciudad 2: ")
-            modificarGrafo(ciudad1,ciudad2,0,"1") #Se modifica el grafo
+            #Se pide el ingreso de los departamentos
+            departamento = input("Departamento 1: ")
+            segundoDepartamento = input("Departamento 2: ")
+            modificarGrafo(departamento,segundoDepartamento,0,"1") #Se modifica el grafo
             
         elif(opcion=="2"):
             #Se hace una nueva conexion
-            ciudad1 = input("Ciudad 1: ")
-            ciudad2 = input("Ciudad 2: ")
-            distancia= input("Distancia: ")
+            departamento = input("Departamento 1: ")
+            segundoDepartamento = input("Departamento 2: ")
+            distancia= input("Distancia en km: ")
             
-            modificarGrafo(ciudad1, ciudad2, distancia, "2")
+            modificarGrafo(departamento, segundoDepartamento, distancia, "2")
         
     else:
         print("Adios")

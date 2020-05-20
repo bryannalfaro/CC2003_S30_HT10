@@ -14,9 +14,18 @@ public class PrincipalRutas {
     	
         Graph grafo2 = new Graph();
     	System.out.println("---ARMADO DEL GRAFO ----");
+    	String directorioNuevoDiccionario = System.getProperty("user.dir");
+        Scanner inputScan;
 		try {
-			String directorioNuevoDiccionario = System.getProperty("user.dir");
-	        Scanner inputScan = new Scanner(new File(directorioNuevoDiccionario + "\\src\\guategrafo.txt"));
+			
+	        
+	        if(directorioNuevoDiccionario.contains("src")) {
+            	inputScan = new Scanner(new File(directorioNuevoDiccionario + "\\src\\guategrafo.txt"));
+            }else {
+            	inputScan = new Scanner(new File(directorioNuevoDiccionario + "\\src\\guategrafo.txt"));
+            }
+	        
+	        
 	        int contador=0;
 	        while (inputScan.hasNextLine()) {
 	            String line = inputScan.nextLine();
