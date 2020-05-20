@@ -68,27 +68,27 @@ while(opcion !="4"):
         
         #---------------PEDIDO DE DATOS--------------------------
         departamento = input("Ingrese el departamento de donde quiere partir: ")
-        while departamento not in listaNodos:
+        while (departamento not in listaNodos):
             departamento = input("Ingrese un departamento correcto: ")
         
         
         segundoDepartamento = input("Ingrese el departamento al que desea ir: ")
-        while segundoDepartamento not in listaNodos:
+        while (segundoDepartamento not in listaNodos):
             segundoDepartamento = input("Ingrese un departamento correcto: ")
         
-        while segundoDepartamento == departamento:
+        while (segundoDepartamento == departamento):
             segundoDepartamento = input("Son iguales. Debe ingresar una diferente ")
-            while segundoDepartamento not in listaNodos:
+            while (segundoDepartamento not in listaNodos):
                 segundoDepartamento = input("Ingrese un departamento correcto: ")
         
+        recorridoCiudades = [] #Lista para guardar los departamentos intermedios
         #----------------------------------------------------------
-                
-        recorridoCiudades = [] #Lista para guardar la ciudad o ciudades intermedias
+        #Se aplica Floyd para obtener la ruta mas corta en forma de diccionario segun la documentacion
         floydDict = nx.floyd_warshall_predecessor_and_distance(grafo)  
         
         try:
-            ruta = floydDict[0][departamento][segundoDepartamento] #path[0] trae el diccionario de predecesores
-            distanciaCiudades = floydDict[1][departamento][segundoDepartamento] #path[1] trae el diccionario de distancias
+            ruta = floydDict[0][departamento][segundoDepartamento] #ruta[0] trae el diccionario de predecesores
+            distanciaCiudades = floydDict[1][departamento][segundoDepartamento] #ruta[1] trae el diccionario de distancias
             recorridoCiudades.append(ruta)
             
             #Se agregan rutas intermedias que no sean iguales al primer departamento

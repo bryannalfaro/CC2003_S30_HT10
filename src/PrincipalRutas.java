@@ -34,7 +34,8 @@ public class PrincipalRutas {
 	            String primera_parte = indice_particion_texto[0];//Obtiene origen
 	            String segunda_parte = indice_particion_texto[1];//Obtiene destino
 	            String tercera_parte = indice_particion_texto[2];//Obtiene distancia
-	           if(contador>=4) {
+	            
+	            if(contador>=4) {
 	        	   if(primera_parte.equals("Peten")) {
 	        		   
 		            	Node n = grafo2.getNodos().get(2);
@@ -64,7 +65,9 @@ public class PrincipalRutas {
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
-    	
+		
+		
+    //Se obtiene la lista de nodos
 	 List<Node> lista =grafo2.getNodos();
 	 MatrizArmado matriz = new MatrizArmado(lista.size());
 	 
@@ -96,7 +99,13 @@ public class PrincipalRutas {
 	 
 	 for(int i=0; i<lista.size();i++) {
 		 System.out.println("****************************************");
-		 System.out.println(lista.get(i).getAristas().get(0).toString());
+		 if(lista.get(i).getAristas().size()==2) {
+			 System.out.println(lista.get(i).getAristas().get(0).toString());
+			 System.out.println(lista.get(i).getAristas().get(1).toString());
+		 }else {
+			 System.out.println(lista.get(i).getAristas().get(0).toString());
+		 }
+		 
 		 System.out.println("****************************************");
 		 System.out.println();
 	 }
