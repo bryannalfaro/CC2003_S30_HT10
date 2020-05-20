@@ -48,7 +48,7 @@ archivo.close()
 opcion =0
 while(opcion !="4"):
     print("Elige una opcion: ")
-    print("1. Ruta entre 2 ciudades")
+    print("1. Ruta entre 2 departamentos")
     print("2. Mostrar centro de grafo")
     print("3. Realizar modificaciones")
     print("4. Salir")
